@@ -1,0 +1,18 @@
+/*
+ * Name: Qianwen (Tiffany) Zheng
+ * Lab: CSCI 136 (Section 05) LAB 4
+ *
+ * This class is designed to compare two Students according to the number
+ * of vowels that the students have in their names
+ */
+
+import java.util.Comparator;
+
+public class VowelComparator implements Comparator<Student> {
+    /*
+     * pre:
+     * post:
+     */
+    public int compare(Student a,Student b) {
+    }
+}

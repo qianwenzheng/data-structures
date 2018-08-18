@@ -1,0 +1,96 @@
+import structure5.*;
+import java.util.Random;
+/*
+ * Name: Qianwen (Tiffany) Zheng
+ * Lab: CSCI 136 (Section 05) LAB 2
+ *   
+ * This class is designed to store various character sequences from within a 
+ * given string and the frequencies in which different characters occur after
+ * each sequence. This information is implemented as a vector of associations
+ * such that for each association, the key is a specific character sequence
+ * stored as a string and the value is the FrequencyList associated with that
+ * sequence. 
+ * 
+ */
+
+public class Table {
+    
+    protected Vector<Association<String,FrequencyList>> freqTable;
+
+    public Table() {
+	freqTable = new Vector<Association<String,FrequencyList>>();
+    }
+    
+    public void update(String charSequence, String nextLetter){
+	Association<String,FrequencyList> selected =
+	    getAssociation(charSequence);
+	FrequencyList freqList = (FrequencyList)selected.getValue();       
+	if (selected == null) {
+	    freqTable.add(new Association<String,FrequencyList>
+			  (charSequence,freqList));
+			  }
+		freqList.updateFrequency(nextLetter);
+    }
+
+    public Integer getTotalFrequency(String charSequence) {
+	Association<String,FrequencyList> selected =
+	    getAssociation(charSequence);
+	FrequencyList freqList = (FrequencyList)selected.getValue();
+	Integer totalFrequency = 0;
+	
+	for(int index=0;index<freqList.size();index++){
+	    Association<String,Integer> letterFreq =
+		(Association<String,Integer>)freqList.get(index);
+	    Integer frequency = (Integer)letterFreq.getValue();
+	    totalFrequency = totalFrequency + frequency;
+	}
+	return totalFrequency;
+    }
+	
+    /*public String getNextLetter(String charSequence) {
+	Association<String,FrequencyList> selected = getAssociation(charSequence);
+	FrequencyList freqList = (FrequencyList)selected.getValue();
+	String nextLetter = freqList.getFrequentLetter();
+	return nextLetter;
+    }*/
+
+    public String getNextLetter (String charSequence){
+	Association<String,FrequencyList> selected =
+	    getAssociation(charSequence);
+	Random rnd = new Random();
+	
+	if(selected != null) {
+	    FrequencyList freqList = (FrequencyList)selected.getValue();
+	    int randomNum = rnd.nextInt(getTotalFrequency(charSequence));
+
+	    for(int index=0; index<freqList.size(); index++) {
+		Association<String,Integer> letterFreq =
+		    (Association<String,Integer>)freqList.get(index);
+		Integer frequency = (Integer)letterFreq.getValue();
+		randomNum = randomNum - frequency;
+		
+		if(randomNum<=0){
+		    return (String)letterFreq.getKey();
+		}
+	    }
+	}
+	    Association<String,FrequencyList> random =
+		freqTable.get(rnd.nextInt(freqTable.size()));
+	    String randomSequence = (String)random.getKey();
+	    return " " + randomSequence;
+	}
+
+    public Association<String,FrequencyList> getAssociation(String
+							    charSequence) {
+	for (int index=0; index < freqTable.size(); index++) {
+	    Association<String,FrequencyList> selected =
+		(Association<String,FrequencyList>)freqTable.get(index);
+	    String theSequence = (String)selected.getKey();
+	    if(theSequence.equals(charSequence)){
+		return selected;
+	    }
+	}
+	return null;
+    }
+    }
+	

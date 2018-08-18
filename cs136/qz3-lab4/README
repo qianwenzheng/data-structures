@@ -1,0 +1,49 @@
+
+Problems:
+
+Problem 5.5 
+The running time of the matrix multiplication method is O(n^3).Problem 5.23 
+Prove that 5^n − 4n − 1 is divisible by 16 for all n ≥ 0To prove that 5^n – 4n – 1 is divisible by 16 for all n >= 0, prove that it is true for n = 1:For n = 1, 5^1  - 4(1) – 1 = 0. Since 0 is divisible by 16, then the statement is true for n = 1.Assume that statement is true for n = k.
+Therefore, 5^k – 4k – 1 = 16x (some multiple of 16)Show that statement is true for n = k + 1 given that n = k is true.So, if 5^k – 4k – 1 = 16x (some multiple of 16)5^k = 16x + 4k + 1 (eqn.1)5^(k+1) – 4(k+1) – 1 = (5^k x 5^1) – 4K – 4 – 1 
+
+Replacing 5^k with eqn.1 shown above:= ((16x + 4k + 1) x 5) – 4k – 4 – 1 = 80x + 20k + 5 – 4k – 4 – 1 = 80x + 16k Since 80x is divisible by 16, and 16k is also divisible by 16, then 80x + 16k is also divisible by 16. Therefore, according to the law of mathematical induction, this proves that the statement is true for all n >= 0.Problem 5.26 To prove that The sum of 2i (as i goes from one to n) is equal to n(n+1), prove that it is true for n=1.For i=1, LHS: 2(1) = 2.RHS: (1)(1+1) = 2.Since LHS=RHS for n=1, the statement is true for n=1.Assume that statement is true for n=kSo, the sum of 2i (as i goes from 1 to k) is equal to k(k+1)Prove that statement is true for n = k+1:The sum of 2i (from 1 to k+1) is equal to the sum of 2i (from 1 to k) (as stated above) + the term when i=k+1, which is 2(k+1). The sum of 2i (from i to k) can be taken as k(k+1) (from the assumption above).Adding the two terms: k(k+1) + 2(k+1) = (k+1)(k+2)= (k+1)(k+1+1)Replacing k+1 by n,= n(n+1) = RHSTherefore, the statement is proven to be true for n = k+1. According to the law of mathematical induction, this proves that the statement is thus true for all n > 0. Problem 6.3 (Refer to bubbleSort implementation in text.) Bubble sort, as presented in the text, performs comparisons in which all cases take O(n^2) time in the best and average cases.Problem 6.4On any pass of bubble sort, if no exchanges are made and the sort is completed, then bubble sort will continue to run in O(n^2) time in the worst and average cases. However, it will perform at O(n) time in the best case. In the best case, the items are already sorted and so the time taken will only be O(n).
+
+Description of each java file:
+
+MyVector.java - This class is designed to be an extension of the Vector class that allows for sorting elements inside the vector.
+      
+Student.java - This class represents a single student and stores the relevant information for each student. 
+
+PhoneBookReader.java - This class is designed to read information from a phonebook text file and perform operations to compare the data inside it. This class operates through the use of a MyVector of Student objects to represent entries in the phonebook file. Comparators are used to compare data from the text input. 
+ 
+NameComparator.java - This class is designed to compare two student objects by their first names according to alphabetical order.
+
+SUBoxComparator.java - This class is designed to compare two Students according to their SU Box numbers.
+
+VowelComparator.java - This class is designed to compare two Students according to the number of vowels that the students have in their names.
+
+AddressComparator.java - This class is designed to compare two Associations of Addresses and the number of students living there.
+
+AddressAssociations.java - This class is designed to store a MyVector of Associations of student addresses and the number of students living at each address.
+
+
+Questions:
+1.  Which student appears first in a printed phone book?
+Given that the phone book is sorted alphabetically by FIRST name first, then last, then, Aalayah Rasheed appears first.
+
+2.  Which student has the smallest SU box? 
+Julia B. Nawrocki has the smallest SU Box of 1000
+Largest?
+Kristof Redei has the largest SU Box of 5008
+
+3. Which student has the most vowels in his/her name?
+Pierre-Alexandre C. Meloty-Kapella has the most vowels in his name.
+
+4. Which address is shared by the most students and what are their names?
+Assuming that the most common address refers to the ENTIRE address (inclusive of number and street rather than only the building), then the address shared by the most students is: 10-12 Meadow Street
+The students with that address are:
+David V Eisenson
+Chris Ellis-Ferrara
+Phillip F W Arnolds
+Ezra A Burch
+Juan P Carro

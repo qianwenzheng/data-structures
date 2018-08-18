@@ -1,0 +1,148 @@
+/*
+ * Name: Qianwen (Tiffany) Zheng & Steven Omondi
+ * Lab: CSCI 136 (Thursday Afternoon - Jon) LAB 9
+ *
+ * This anstract class represents a 
+ */
+
+import java.util.Vector;
+import java.util.Random;
+import structure5.*;
+
+public abstract class BusinessSimulation {
+
+    /* sequence of customers, prioritized by randomly-generated event time */
+    PriorityVector<Customer> eventQueue; 
+
+    /* series of service points where customers queue and are served */
+    Vector<QueueVector<Customer>> servicePoints;
+
+    /* current time step in the simulation */
+    protected int time;
+
+    /* seed for Random() so that simulation is repeatable */
+    int seed;
+
+    /* Used to bound the range of service times that Customers require */
+    static final int MIN_SERVICE_TIME = 1;
+	static final int MAX_SERVICE_TIME = 10;
+
+    /**
+     * Creates a BusinessSimulation.
+     * @post the step() function may be called.
+     *
+     * @numCustomers number of random customers that appear in the simulation
+     * @numSerivicePoints number of tellers in this simulation
+     * @maxEventStart latest timeStep that a Customer may appear in the simulation
+     * @seed used to seed a Random() so that simulation is repeatable.
+     */
+    public BusinessSimulation(int numCustomers, int numServicePoints,
+			      int maxEventStart, int theSeed) {
+	
+	servicePoints = new Vector<QueueVector<Customer>>(numServicePoints);
+	for (int i = 0; i < numServicePoints; i ++){
+	    servicePoints.add(new QueueVector<Customer>());
+	}
+	
+	eventQueue = new PriorityVector<Customer>();
+    }
+
+    /**
+     * Generates a sequence of Customer objects, stored in a PriorityQueue.
+     * Customer priority is determined by arrival time
+     * @arg numCustomers number of customers to simulate
+     * @arg maxEventStart maximum timeStep that a customer arrives
+     *      in @eventQueue
+     * @arg seed use Random(seed) to make customer sequence repeatable
+     * @return A PriorityQueue that represents Customer arrivals,
+     *         ordered by Customer arrival time
+     */
+    public PriorityVector<Customer> generateCustomerSequence(int numCustomers,
+								   int maxEventStart,
+								   int seed) {
+	Random rnd = new Random();
+	rnd.setSeed(seed);
+
+	for (int i = 0; i < numCustomers; i++){
+	    Customer c = new Customer(rnd.nextInt(maxEventStart), MIN_SERVICE_TIME + rnd.nextInt(MAX_SERVICE_TIME));
+	    eventQueue.add(c);
+	}
+	return eventQueue;
+    }
+
+    abstract public boolean step();
+
+    abstract public boolean step(int timeSteps);
+
+    /**
+     * Advances @timeSteps time steps through the simulation.
+     *
+     * @post the simulation has advanced @timeSteps time steps
+     * @return true if the simulation is over, false otherwise
+     */
+     public boolean stepHelper(int timeSteps){
+	 for (int i = 0; i < timeSteps; i++){
+	    stepHelper();
+	    // System.out.println("i stepped");
+	}
+	
+	return stepHelper();
+    }
+    
+    /**
+     * Advances 1 time step through the simulation.
+     *
+     * @post the simulation has advanced 1 time step
+     * @return true if the simulation is over, false otherwise
+     */
+    public boolean stepHelper(){
+
+	// Removes any customer who is finished
+	removeCust();
+
+	time++;
+	// Checking if the simulation is over
+	if (!eventQueue.isEmpty()){
+	    for (int i = 0; i < servicePoints.size(); i++){
+		if (!servicePoints.get(i).isEmpty()){
+		    return false;
+		}
+	    }
+	}
+	return true;
+    }
+    //changed all v to servicePoints
+    // Removes a customer from a teller line if he is finished
+     public void removeCust(){
+	for (int i = 0; i < servicePoints.size(); i++){
+	    if (!servicePoints.get(i).isEmpty()){
+	    Customer cust = servicePoints.get(i).getFirst();
+	    if (time == (cust.getEventTime() + cust.getServiceTime())){
+		    servicePoints.get(i).remove();
+		    System.out.println("serviced");
+		}
+	    } 
+	}
+    }
+    
+	/**
+     * @return a string representation of the simulation
+     */
+    public String toString() {
+	// TODO: modify if needed.
+	String str = "Time: " + time + "\n";
+	str = str + "Event Queue: ";
+	if (eventQueue != null) {
+	    str = str + eventQueue.toString();
+	}
+	str = str + "\n";
+
+	if (servicePoints != null)  {
+	    for (Queue<Customer> sp : servicePoints) {
+		str = str + "Service Point: " + sp.toString() + "\n";
+	    }
+	}
+
+	return str;
+    }
+}

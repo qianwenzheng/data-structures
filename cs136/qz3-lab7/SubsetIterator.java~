@@ -1,0 +1,33 @@
+import structure5.*;
+import java.util.Iterator;
+import java.util.Scanner;
+
+/*                                                                                 
+ * Name: Qianwen (Tiffany) Zheng                                                      
+ * Lab: CSCI 136 (Section 05) LAB 7                                                  
+ *                                                                                    
+ * This class is designed to iterate over the elements of a subset by iterating over the elements from an initial iterator that 
+ * corresponds to 1's in a given bit mask. 
+ */
+
+public class SubsetIterator<E> implements Iterator<E> {
+
+    /**
+     * Constructs the SubsetIterator that iterates over the elements of the source iterator, it, according to a bit mask
+     * @param source iterator and bit mask represented by an integer value
+     */
+    public SubsetIterator(Iterator<E> it, int bitMask){
+	
+    }
+
+    /**
+     * Returns true if there are more elements in this subset
+     */
+    public boolean hasNext(){
+    }
+
+    /**
+     * Does nothing
+     */
+    public void remove(){}
+}

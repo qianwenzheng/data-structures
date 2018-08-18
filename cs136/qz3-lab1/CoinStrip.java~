@@ -1,0 +1,153 @@
+import java.util.Scanner;
+import java.util.Random;
+
+/*
+ * Name: Qianwen (Tiffany) Zheng
+ * Lab: CSCI 136 (Section 05) LAB 1
+ * This program simulates a Silver Dollar Game in which two users compete to
+ * move a certain number of coins to the leftmost squares of the paper by 
+ * moving one coin leftwards at a time. The player who moves last wins. 
+ */
+
+public class CoinStrip {
+
+    private int[] strip;  //An array to store the characters that appear in each space
+    private static final int ADD_SPACES = 15; 
+    private static final int MIN_SPACES = 8;
+    private int numCoins;
+    
+    /*
+     * Generates a random board
+     */
+    public CoinStrip() {
+
+	Random rng = new Random();
+       int numSpaces = rng.nextInt(ADD_SPACES) + MIN_SPACES;
+	strip = new int[numSpaces];
+	int coinNumLabel = 1;
+	int currentCoins = rng.nextInt(numSpaces/2) + 2;
+	numCoins = currentCoins;
+	
+	while (currentCoins > 0) {
+	    int coinPos = rng.nextInt(numSpaces-1);
+	    if (strip[coinPos] == 0) {
+		strip[coinPos] = 1;
+		currentCoins--;
+	    }
+	}
+
+	for (int i = 0; i<strip.length; i++) {
+	    if (strip[i] == 1) {
+		strip[i] = coinNumLabel;
+		coinNumLabel++;
+	    }
+	}
+    }
+
+    /*
+     * Creates a CoinStrip object and controls the play of a single game
+     */
+    public static void main (String args[]) {
+
+	CoinStrip theStrip = new CoinStrip();
+
+	System.out.println(theStrip.toString());
+	
+	Scanner in = new Scanner(System.in);
+
+	int playerNum = 1;
+	
+	while(!theStrip.win()) {
+
+	System.out.println("Player " + playerNum + "'s " + "turn");
+	System.out.print("Enter the number of the coin you want to move: ");
+	int selectedCoin = in.nextInt();
+	while (!theStrip.validCoin(selectedCoin)){
+	    System.out.print("Not a valid coin! Enter the number of another coin:");
+	    selectedCoin = in.nextInt();
+	}
+	
+	System.out.print("Enter the number of spaces you want to move the coin: ");
+	int numMoves =in.nextInt();
+
+	while (!theStrip.validMove(selectedCoin, numMoves)) {
+		System.out.print("Not a valid move! Enter the number of spaces you want to move: ");
+		numMoves = in.nextInt();
+	    }
+	    
+	theStrip.move(selectedCoin, numMoves);
+
+	if (!theStrip.win()) {
+	if (playerNum == 1) {
+	    playerNum++;
+	} else {
+	    playerNum--;
+	}
+	    }
+	}
+	System.out.println("CONGRATS PLAYER " + playerNum + "! YOU WON!"); 
+	
+    }
+
+/*
+ * Returns the coin strip represented as a string
+ */
+public String toString() {
+    String output = "";
+
+    for (int i=0; i<strip.length; i++){
+	if (strip[i] == 0) {
+	    output = output + "[ ]";
+	} else {
+	output = output + "[" + Integer.toString(strip[i]) + "]";
+    }
+    }
+    return output;
+}
+
+/*
+ * Allows the user to move a coin a certain number of spaces
+ */
+public void move(int coin, int spaces) {
+    int prevCoinPos = indexOf(coin);
+    int newCoinPos = indexOf(coin) - spaces;
+
+    int temp = strip[newCoinPos];
+    strip[newCoinPos] = strip[prevCoinPos];
+    strip[prevCoinPos] = temp;
+    
+    System.out.println(toString());
+    }
+
+    /*
+     * Checks whether the user made a legal move
+     */
+    public boolean validCoin(int coin) {
+	return indexOf(coin) > 0 && ((indexOf(coin-1) < indexOf(coin) - 1) || coin==1);
+	    }
+
+    public boolean validMove (int coinLabel, int spaces) {
+	return (spaces>0) && (indexOf(coinLabel)-spaces > -1) && (coinLabel == 1 || ((indexOf(coinLabel) - spaces) > indexOf(coinLabel-1)));
+	    }
+
+    /*
+     * Checks whether the game is won
+     */
+    public boolean win(){
+	for (int i = 0; i <numCoins; i++) {
+	    if (strip[i] == 0) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    public int indexOf(int selected) {
+	for (int i=0; i<strip.length; i++){
+	    if(strip[i] == selected) {
+		return i;
+	    }
+	}
+	return -1;
+    }
+}

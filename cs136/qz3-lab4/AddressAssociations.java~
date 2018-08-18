@@ -1,0 +1,21 @@
+/*
+ * Name: Qianwen (Tiffany) Zheng
+ * Lab: CSCI 136 (Section 05) LAB 4
+ *
+ * This class is designed to store a MyVector of Associations of student addresses and the number 
+ * of students living at each address
+ */
+
+import structure5.*;
+
+public class AddressAssociations {
+
+    protected MyVector<Association<String,Integer>> addrList;
+
+    /*
+     * Constructs a MyVector of Associations
+     */
+    public AddressAssociations() {
+	addrList = new MyVector
+    }
+}

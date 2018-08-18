@@ -1,0 +1,68 @@
+Name: Qianwen (Tiffany) Zheng
+Lab: CSCI 136 (Section 05) LAB 7
+
+(3) ANSWERS TO QUESTIONS
+
+a) The difference in height of the towers for the best solution for n=15 is 9.704773256302701E-4, or 9.704773256302701
+x 10^(-4).
+
+b) The graph showing the time to solve the tower problem vs. the value of n depicting the domain n = 5 through n = 25 is
+shown in graph.png.
+
+Upon running the program for different values of n:
+
+Value of n - Time(real) taken:
+5 - 0.099s
+7 - 0.098s
+9 - 0.097s
+11 - 0.098s
+13 - 0.101s
+15 - 0.134s
+17 - 0.160s
+19 - 0.356s
+21 - 1.215s
+23 - 4.987s
+25 - 21.294s
+
+The graph depicts a curve that looks like an exponential graph. It starts off very shallow with low values of n and
+then shoots up dramatically with higher values of n. The curve has a very gentle slope in the beginning and then the
+slope gets steeper as n increases. This shape suggests that the growth is exponential. Although it is not very clear
+from the smaller values of n on the graph which all have close running times, the larger values illustrate almost a
+doubling of running time as n is increased. This suggests that the time complexity of the algorithm is O(2^n). It shows
+that the running time rises meteorically upon larger values of n. This curve depicting this time complexity makes sense
+according to how the program was implemented. 
+
+c) In estimating the time to solve the 40 and 50-block problems, we would use the time complexity O(2^n). Since the
+running time for 25 blocks is 21.294s, 
+
+d) To solve the n-block problem using SubsetIterator and Vector, you would have to redesign TwoTowers in the following
+way: The recursive helper method to compute the total height of the blocks, which is ultimately used to calculate the
+target height for one tower, will remain the same. What will change, however, is instead of using a while loop to go
+through the elements of a subset for a given bitMask to find the height of the blocks, you would first create a data
+structure, for example a vector, to store the integer values representing the areas of the faces of each block (eg.
+if you have 3 blocks, the vector would store the integer values 1,2,3 by adding them one by one). To use the
+SubsetIterator in this problem, you need bitMasks representing each possible subset: so for n blocks, you would need
+bitMasks from 1 to 2^n - 1 (the empty set would not be necessary in this problem because if the bitMask is zero, it
+would not print out any values for the towers anyways). Therefore, you would still use the for loop that goes through
+all the possible subsets. You would create a new SubsetIterator object on each iteration of the for loop, by  using
+a iterator for the vector (eg. for vector v, you would do v.iterator()) and using the current value of the integer
+being iterated in the for loop (which represents a specific subset and thus the bitMask to be used) as parameters of
+the SubsetIterator. While the SubsetIterator has more elements, the height of all the blocks would be calculated very
+similarly to how it was done previously, by adding the height of each block to the total height of the subset as the
+SubsetIterator goes through each block of the subset. The maximum height would be found similarly, by storing a current
+maximum value that would update on the every iteration of the for loop if the height of the subset got closer to the
+target height. You would keep track of the subset associated with this height in a similar way as before also. So the
+if statement that performs these tasks would remain as before. To print the areas of the faces of the blocks of the two
+towers, you would create a SubsetIterator similarly the same way you did before using the bitMask representing the
+tallest subset you kept track of before. While the SubsetIterator has more elements, the blocks of the subset that
+represents one tower could be stored in a vector, v2. You would print out the elements of this vector. To print the
+areas of the faces of the other tower, you could iterate through the original vector and print out the elements that
+are not contained in the vector v2. You would print out the height of the first tower and the difference in tower
+heights the same way as before.
+
+The benefits of using SubsetIterator includes making the code more concise since you would not have to include the
+instructions for the bit shift operations and checks as before. Drawbacks include having to create new SubsetIterator
+objects for every subset, which can take up considerable memory if the number of blocks is large. Another drawback is
+having to create vector objects, utilizing excess memory that could have been avoided. Although using the SubsetIterator
+is more elegant in that it looks more readable stylistically and would come in handy for larger, more extensive
+programs, it comes with the disadvantage of having to create data structures that are avoided in the original design.

@@ -1,0 +1,16 @@
+/*
+ * Name: Qianwen (Tiffany) Zheng
+ * Lab: CSCI 136 (Section 05) LAB 4
+ *
+ * This class is designed to compare two Associations of Addresses and the number of students
+ * living there. 
+ */
+
+import java.util.Comparator;
+
+public class AddressComparator implements Comparator<Association<String,Integer>> {
+    /*
+     * pre: both associations consist of valid addresses and number of students 
+     * post: 
+     */
+}

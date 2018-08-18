@@ -1,0 +1,121 @@
+import structure5.*;
+import java.util.Random;
+/*
+ * Name: Qianwen (Tiffany) Zheng
+ * Lab: CSCI 136 (Section 05) LAB 2
+ * 
+ * This class is designed to keep track of the characters that appear after a
+ * certain character sequence as well as the respective frequencies that those
+ * characters occur within a given string. This information is implemented as
+ * a vector of associations in which a single letter stored as a string is the
+ * key and the number of times that that letter occured after the given
+ * sequence is the value in each association. 
+ */
+
+public class FrequencyList {
+    
+    
+    protected Vector<Association<String,Integer>> freqList;  //the frequency list
+    Random rnd = new Random();  //random number generator
+
+    /*
+     * Creates a frequency list of letters and their respective frequencies
+     */
+    public FrequencyList() {
+	freqList = new Vector<Association<String,Integer>>();
+    }
+
+    /*public Integer getFrequency(String letter) {
+        Association<String,Integer> selected = getAssociation(letter);
+	if (selected != null) {
+	    Integer frequency = (Integer)selected.getValue();
+	    return frequency;
+	} 
+	    return 0;
+	    }*/
+   
+    /*
+     * 
+     */
+     public void updateFrequency(String letter) {
+     
+	Association<String,Integer> selected = getAssociation(letter);
+	if (selected != null) {
+	    Integer f = (Integer)selected.getValue();
+	    selected.setValue(new Integer(f.intValue() + 1));
+	} else {
+	    freqList.add(new Association<String,Integer>(letter, 1));
+	}
+    }
+
+    public Association<String,Integer> getAssociation(String letter) {
+	for (int index=0; index < freqList.size(); index++) {
+	    Association<String,Integer> letterFreq =
+		(Association<String,Integer>)freqList.get(index);
+	    String theLetter = (String)letterFreq.getKey();
+	    if (theLetter.equals(letter)) {
+		return letterFreq;
+	    }
+	}
+	return null;
+	}
+    
+    /*public String getLetter(Integer frequency) {
+	for (int index=0; index < freqList.size(); index++) {
+	    Association<String,Integer> letterFreq =
+		(Association<String,Integer>) freqList.get(index);
+	    Integer theFrequency = (Integer)letterFreq.getValue();
+	    if (theFrequency.equals(frequency)) {
+		String theLetter = (String)letterFreq.getKey();
+		
+		// Group letters with the same frequency
+	        Vector<String> letters = new Vector<String>();
+		letters.add(theLetter);
+	    }
+	    
+	    // Randomly selects a letter to return from those with same frequency
+	    int letterIndex = rnd.nextInt(letters.size());
+	    String selectedLetter = letters.get(letterIndex);
+	    return selectedLetter;
+	}
+	return null;
+	}*/ 
+
+    /* public String getFrequentLetter() {
+	Integer highest;
+	for (int index=0; index < freqList.size(); index++) {
+	    Association<String,Integer> letterFreq =
+		(Association<String,Integer>) freqList.get(index);
+	    Integer frequency = (Integer)letterFreq.getValue();
+	    if (highest < frequency){
+		highest = frequency;
+	    }
+	}
+	String frequentLetter = getLetter(highest);
+	return frequentLetter;
+	}*/
+
+    public int size(){
+	return freqList.size();
+    }
+
+    public Association<String,Integer> get(int index){
+	return freqList.get(index);
+    }
+}
+
+
+	  
+
+		
+		    
+		     
+	    
+    
+     
+  
+
+    
+    
+	
+	
